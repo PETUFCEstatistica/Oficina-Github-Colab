@@ -23,7 +23,7 @@ Este repositório reúne a análise de dados feita durante a oficina do **PET**.
 ## Estrutura padrão para Análise de Dados:
 
 ```
-├── codigo/
+├── codigos/
 │   ├── 01-limpeza-de-dados.ipynb
 │   ├── 02-analise-exploratoria.ipynb
 │   └── 03-<outras-analises>.ipynb
