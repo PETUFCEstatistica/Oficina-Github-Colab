@@ -120,4 +120,4 @@ pdflatex -output-directory=build relatorio-final.tex
 
 ## Licença
 
-Este projeto está licenciado sob a Licença MIT. Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
+Este projeto está licenciado sob a Licença GNU General Public License v3.0. Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
