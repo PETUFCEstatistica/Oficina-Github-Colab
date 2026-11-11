@@ -1,9 +1,8 @@
 <div align="center">
 
-<!-- Opcional: coloque um logo em docs/logo.png e descomente a linha abaixo -->
-<!-- <img src="docs/logo.png" alt="Logo do projeto" width="150"> -->
+<img src="Logo_PET2.png" alt="drawing" width="200"/>
 
-# Oficina-PET
+# Oficina de GitHub e Colab
 
 *Análise estatística dos anúncios do Airbnb em Nova York (2019), desenvolvida na oficina do PET.*
 
