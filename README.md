@@ -9,7 +9,7 @@
 [![Abrir no Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Gabrielsena-eng/Oficina-PET/blob/main/codigo/01-limpeza-de-dados.ipynb)
 [![Baixar Notebook](https://img.shields.io/badge/Baixar-Notebook-blue?logo=jupyter&logoColor=white)](https://github.com/Gabrielsena-eng/Oficina-PET/raw/main/codigo/01-limpeza-de-dados.ipynb)
 [![Site](https://img.shields.io/badge/Site-Visitar-green?logo=googlechrome&logoColor=white)](https://seu-site.com)
-[![Licença: MIT](https://img.shields.io/badge/Licen%C3%A7a-MIT-yellow)](LICENSE)
+[![Licença: MIT](https://img.shields.io/badge/Licen%C3%A7a-GPL_v3.0-yellow)](LICENSE)
 
 </div>
 
