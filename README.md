@@ -114,10 +114,6 @@ pdflatex -output-directory=build relatorio-final.tex
 
 > Se preferir, o relatório também pode ser compilado no Overleaf, enviando a pasta `relatorio/`.
 
-## Limitações
-
-[Descreva os cuidados necessários: dados de um único ano, possíveis vieses de amostragem, pressupostos dos modelos que podem não ser satisfeitos, etc.]
-
 ## Autor
 
 **Gabriel Sena** · [GitHub](https://github.com/Gabrielsena-eng)
