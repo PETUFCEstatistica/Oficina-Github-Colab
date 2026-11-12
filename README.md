@@ -299,6 +299,173 @@ O notebook agora aparece na pasta do Colab. É por isso que o `git pull` existe:
 
 ## Parte 3: Limpeza e análise exploratória
 
+Nesta parte você escreve dois notebooks: o `01-limpeza_de_dados.ipynb`, que trata a base, e o `02-analise_exploratoria.ipynb`, que explora os dados já limpos.
+
+### Passo 3.1: Limpar os dados
+
+No notebook `01-limpeza_de_dados.ipynb` que você criou na Parte 2, adicione as células abaixo **depois** da célula de clonagem. Cada bloco é uma célula.
+
+**Célula 1: carregar e conhecer a base**
+
+```python
+import pandas as pd
+
+df = pd.read_csv("dados/brutos/dados-brutos.csv")
+
+# Informações sobre a base de dados
+df.info()
+print(df.isna().sum())        # valores ausentes por coluna
+print(df.duplicated().sum())  # linhas duplicadas
+df.describe()
+```
+
+**Célula 2: converter tipos e tratar valores ausentes**
+
+```python
+# Converter tipos
+df["last_review"] = pd.to_datetime(df["last_review"], errors="coerce")
+df["neighbourhood_group"] = df["neighbourhood_group"].astype("category")
+df["room_type"] = df["room_type"].astype("category")
+
+# Tratar valores ausentes e duplicados
+df["name"] = df["name"].fillna("sem nome")
+df["host_name"] = df["host_name"].fillna("desconhecido")
+df["reviews_per_month"] = df["reviews_per_month"].fillna(0)
+df = df.drop_duplicates()
+```
+
+**Célula 3: analisar a distribuição dos preços e tratar outliers**
+
+```python
+# Análise da distribuição dos preços
+print(df["price"].describe())
+print(df["price"].quantile([0.5, 0.9, 0.95, 0.99]))
+
+# Tratamento de outliers (regra do IQR) e remoção de preços iguais a zero
+q1, q3 = df["price"].quantile([0.25, 0.75])
+limite = q3 + 1.5 * (q3 - q1)
+df_limpo = df[(df["price"] <= limite) & (df["price"] > 0)].copy()
+
+# Quantos registros foram removidos
+removidos = len(df) - len(df_limpo)
+print(f"Limite: {limite:.0f}")
+print(f"Antes: {len(df)} | Depois: {len(df_limpo)} | Removidos: {removidos} ({removidos / len(df):.1%})")
+```
+
+**Célula 4: salvar a base tratada**
+
+```python
+df_limpo.to_csv("dados/limpos/dados-limpos.csv", index=False)
+```
+
+**O que você deve encontrar:**
+
+| Verificação | Resultado |
+|-------------|-----------|
+| Linhas e colunas da base original | 48.895 linhas e 16 colunas |
+| Ausentes em `name` / `host_name` | 16 / 21 |
+| Ausentes em `last_review` e `reviews_per_month` | 10.052 cada |
+| Linhas duplicadas | 0 |
+| Limite superior de preço (IQR) | US$ 334 |
+| Linhas após a limpeza | 45.912 (foram removidas 2.983, ou 6,1%) |
+
+<details>
+<summary><b>Alternativa: buscar os dados direto do Kaggle</b></summary>
+
+<br>
+
+Em vez de ler o CSV que você enviou no Passo 1.4, é possível baixar a base do Kaggle com a biblioteca `kagglehub`. Use este código no lugar da primeira linha de leitura da Célula 1 (o restante continua igual):
+
+```python
+import pandas as pd
+import kagglehub
+from kagglehub import KaggleDatasetAdapter
+
+# Se der erro de importação, rode antes: !pip install -q "kagglehub[pandas-datasets]"
+df = kagglehub.load_dataset(
+    KaggleDatasetAdapter.PANDAS,
+    "dgomonov/new-york-city-airbnb-open-data",
+    "AB_NYC_2019.csv",
+)
+
+# Guarda uma cópia dos dados brutos no projeto
+df.to_csv("dados/brutos/dados-brutos.csv", index=False)
+```
+
+</details>
+
+> **Para pensar:** por que `reviews_per_month` foi preenchido com `0`? Dica: compare as linhas ausentes com `number_of_reviews == 0`. E que impacto tem remover 6,1% dos anúncios por causa do preço?
+
+### Passo 3.2: Enviar a base limpa e o notebook para o GitHub
+
+Antes do `push`, faça sempre um `pull` para trazer qualquer mudança que esteja no GitHub:
+
+```python
+!git pull
+!git add .
+!git commit -m "Adiciona base limpa"
+!git push
+```
+
+Depois, salve novamente o notebook pelo menu (**Arquivo > Salvar uma cópia no GitHub**, no caminho `codigos/01-limpeza_de_dados.ipynb`) para versionar também as células que você acabou de escrever.
+
+### Passo 3.3: Análise exploratória
+
+Crie um novo notebook no Colab e renomeie-o para `02-analise_exploratoria.ipynb`. Como cada notebook tem a sua própria sessão, repita a célula de clonagem do [Passo 2.3](#passo-23-clonar-o-repositório-no-colab) e, em seguida, carregue a base limpa:
+
+```python
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df_limpo = pd.read_csv("dados/limpos/dados-limpos.csv")
+```
+
+> **Dica:** comece o notebook com uma célula de texto contendo o [dicionário de dados](#dicionário-de-dados). Ele ajuda a lembrar o significado de cada coluna enquanto você analisa.
+
+Explore os dados respondendo a perguntas simples:
+
+**Núcleo** (para todos):
+
+| Seção | Pergunta | Recurso |
+|-------|----------|---------|
+| Panorama geral de preços | Como se distribuem os preços das diárias? | Histograma |
+| Comparação por região | Qual região tem os maiores preços medianos e médios? | Tabela, gráfico de barras e boxplot |
+| Mapa de Nova York | Onde estão os imóveis mais caros e como as regiões se dividem no espaço? | Dispersão de latitude × longitude, por preço e por região |
+
+**Extras** (se der tempo):
+
+| Seção | Pergunta | Recurso |
+|-------|----------|---------|
+| Bairros | Quais bairros têm mais anúncios e quais cobram diárias mais altas? | Contagem e mediana dos 5 maiores bairros |
+| Tipo de acomodação | Como o tipo de quarto afeta o preço e como a oferta se distribui entre as regiões? | Barras, tabela cruzada (em %) e contagem |
+| Avaliações e preço | Anúncios com mais avaliações cobram diárias menores ou maiores? | Gráfico de dispersão |
+
+Cada gráfico é feito com poucas linhas. Veja, por exemplo, o histograma de preços:
+
+```python
+sns.histplot(data=df_limpo, x="price", bins=50)
+
+plt.title("Distribuição de Preços", fontweight="bold")
+plt.xlabel("Preço (USD)", fontweight="bold")
+plt.ylabel("Frequência", fontweight="bold")
+plt.tight_layout()
+plt.show()
+```
+
+Se quiser comparar o seu resultado com o notebook finalizado, ele está na pasta `codigos/` deste repositório de referência (veja a [Parte 4](#parte-4-se-o-tempo-acabar)).
+
+> **Para pensar:** os gráficos de barras usam a **mediana** do preço. Por que ela costuma ser mais indicada do que a média quando a distribuição tem valores extremos?
+
+Ao terminar, salve o notebook pelo menu (**Arquivo > Salvar uma cópia no GitHub**, no caminho `codigos/02-analise_exploratoria.ipynb`) e traga a mudança para o Colab com `!git pull`.
+
+### Passo 3.4: Fechar o projeto
+
+- **README:** volte ao `README.md` e escreva o que você encontrou (principais resultados, dados utilizados, como executar). O README é a primeira coisa que as pessoas leem, e é melhor escrevê-lo por último.
+- **Botões (badges):** são imagens do [Shields.io](https://shields.io) envolvidas por um link, no formato `[![Texto alternativo](URL-da-imagem)](URL-de-destino)`. Se quiser um botão "Abrir no Colab", use `https://colab.research.google.com/github/SEU-USUARIO/SEU-REPOSITORIO/blob/main/codigos/01-limpeza_de_dados.ipynb` como destino.
+- **Relatório (opcional):** a pasta `relatorio/` guarda o relatório em LaTeX. Para compilar sem instalar nada, crie um projeto no [Overleaf](https://www.overleaf.com/) e envie o `relatorio-final.tex`. À medida que o relatório cresce, é comum dividi-lo em `relatorio/sessoes/` (introdução, metodologia, resultados...) e criar um `refs.bib` para as referências.
+
 ---
 
 ## Parte 4: Usando este repositório de Template
@@ -322,6 +489,35 @@ Caso deseje apenas **clonar** copie o repositório para o Colab ou para o seu co
 > **Ficou para trás na Parte 1 ou 2?** Crie a sua cópia pelo template e continue direto da [Parte 3](#parte-3-limpeza-e-análise-exploratória). Depois você refaz o passo a passo com calma.
 
 --- 
+## Dicionário de dados
+
+<details>
+<summary><b>Clique para ver a descrição das 16 colunas</b></summary>
+
+<br>
+
+Fonte: [New York City Airbnb Open Data](https://www.kaggle.com/datasets/dgomonov/new-york-city-airbnb-open-data), no Kaggle. Cada linha representa um anúncio.
+
+| Coluna | Descrição | Exemplo |
+| :--- | :--- | :--- |
+| `id` | Identificador único do anúncio | `2539` |
+| `name` | Título do anúncio publicado pelo anfitrião | `Clean & quiet apt home by the park` |
+| `host_id` | Identificador único do anfitrião | `2787` |
+| `host_name` | Nome de exibição do anfitrião | `John` |
+| `neighbourhood_group` | Distrito de Nova York (`Manhattan`, `Brooklyn`, `Queens`, `Bronx`, `Staten Island`) | `Brooklyn` |
+| `neighbourhood` | Bairro | `Kensington` |
+| `latitude` | Latitude (WGS84) | `40.64749` |
+| `longitude` | Longitude (WGS84) | `-73.97237` |
+| `room_type` | Tipo de acomodação (`Entire home/apt`, `Private room`, `Shared room`) | `Private room` |
+| `price` | Preço da diária, em dólares (USD) | `149` |
+| `minimum_nights` | Mínimo de noites por reserva | `1` |
+| `number_of_reviews` | Total de avaliações recebidas | `9` |
+| `last_review` | Data da avaliação mais recente (`AAAA-MM-DD`) | `2018-10-19` |
+| `reviews_per_month` | Média mensal de avaliações | `0.21` |
+| `calculated_host_listings_count` | Quantidade de anúncios do mesmo anfitrião | `6` |
+| `availability_365` | Dias do ano (0 a 365) em que o anúncio esteve disponível | `365` |
+
+</details>
 
 ## Boas práticas
 
