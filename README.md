@@ -7,9 +7,9 @@
 *Aprenda a organizar um projeto de análise de dados, versioná-lo no GitHub e executá-lo no Google Colab, usando os anúncios do Airbnb em Nova York (2019) como exemplo.*
 
 [![Abrir no Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/PETUFCEstatistica/Oficina-Github-Colab/blob/main/codigos/01-limpeza_de_dados.ipynb)
-[![Baixar Notebook](https://img.shields.io/badge/Baixar-Notebook-blue?logo=jupyter&logoColor=white)](https://github.com/PETUFCEstatistica/Oficina-Github-Colab/raw/main/codigos/01-limpeza_de_dados.ipynb)
-[![Usar este template](https://img.shields.io/badge/Usar_este-template-2ea44f?logo=github&logoColor=white)](https://github.com/PETUFCEstatistica/Oficina-Github-Colab/generate)
-[![Site](https://img.shields.io/badge/Site-Visitar-orange?logo=googlechrome&logoColor=white)](https://sites.google.com/view/petestatisticaufc/)
+[![Baixar Notebooks](https://img.shields.io/badge/Baixar-Notebook-blue?logo=jupyter&logoColor=white)](https://github.com/PETUFCEstatistica/Oficina-Github-Colab/releases/download/notebooks-1.0/notebooks.zip)
+[![Usar este template](https://img.shields.io/badge/Usar-template-2ea44f?logo=github&logoColor=white)](https://github.com/PETUFCEstatistica/Oficina-Github-Colab/generate)
+[![Site do PET](https://img.shields.io/badge/Site-PET-orange?logo=googlechrome&logoColor=white)](https://sites.google.com/view/petestatisticaufc/)
 [![Licença: GPL-3.0](https://img.shields.io/badge/Licen%C3%A7a-GPL--3.0-yellow)](LICENSE)
 
 </div>
@@ -36,7 +36,12 @@
     - [Passo 2.4: Comandos básicos do Git](#passo-24-comandos-básicos-do-git)
     - [Passo 2.5: Salvar o notebook no GitHub e sincronizar](#passo-25-salvar-o-notebook-no-github-e-sincronizar)
   - [Parte 3: Limpeza e análise exploratória](#parte-3-limpeza-e-análise-exploratória)
+    - [Passo 3.1: Limpar os dados](#passo-31-limpar-os-dados)
+    - [Passo 3.2: Enviar a base limpa e o notebook para o GitHub](#passo-32-enviar-a-base-limpa-e-o-notebook-para-o-github)
+    - [Passo 3.3: Análise exploratória](#passo-33-análise-exploratória)
+    - [Passo 3.4: Fechar o projeto](#passo-34-fechar-o-projeto)
   - [Parte 4: Usando este repositório de Template](#parte-4-usando-este-repositório-de-template)
+  - [Dicionário de dados](#dicionário-de-dados)
   - [Boas práticas](#boas-práticas)
   - [Problemas comuns](#problemas-comuns)
   - [Créditos](#créditos)
