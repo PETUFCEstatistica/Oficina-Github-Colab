@@ -8,8 +8,8 @@
 
 [![Abrir no Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/PETUFCEstatistica/Oficina-Github-Colab/blob/main/codigos/01-limpeza_de_dados.ipynb)
 [![Baixar Notebooks](https://img.shields.io/badge/Baixar-Notebook-blue?logo=jupyter&logoColor=white)](https://github.com/PETUFCEstatistica/Oficina-Github-Colab/releases/download/notebooks-1.0/notebooks.zip)
-[![Usar este template](https://img.shields.io/badge/Usar-template-2ea44f?logo=github&logoColor=white)](https://github.com/PETUFCEstatistica/Oficina-Github-Colab/generate)
-[![Site do PET](https://img.shields.io/badge/Site-PET-orange?logo=googlechrome&logoColor=white)](https://sites.google.com/view/petestatisticaufc/)
+[![Usar este template](https://img.shields.io/badge/GitHub-Usar_template-2ea44f?logo=github&logoColor=white)](https://github.com/PETUFCEstatistica/Oficina-Github-Colab/generate)
+[![Site do PET](https://img.shields.io/badge/Acessar-Site_PET-orange?logo=googlechrome&logoColor=white)](https://sites.google.com/view/petestatisticaufc/)
 [![Licença: GPL-3.0](https://img.shields.io/badge/Licen%C3%A7a-GPL--3.0-yellow)](LICENSE)
 
 </div>
